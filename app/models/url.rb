@@ -1,5 +1,6 @@
 class Url < ApplicationRecord
   belongs_to :user
+  has_many :url_clicks
 
   validates :user, :url_long, :url_short, presence: true
   validates :url_long, url: true
@@ -26,6 +27,10 @@ class Url < ApplicationRecord
 
   def manual_url_short
     @manual_url_short ||= url_short
+  end
+
+  def register_click!(user = nil)
+    Urls::RegisterClick.new(self, user).call
   end
 
   private

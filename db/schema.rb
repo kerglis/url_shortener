@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_13_084959) do
+ActiveRecord::Schema.define(version: 2018_12_13_152715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "url_clicks", force: :cascade do |t|
+    t.integer "url_id"
+    t.integer "user_id"
+    t.integer "clicks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["url_id"], name: "index_url_clicks_on_url_id"
+    t.index ["user_id"], name: "index_url_clicks_on_user_id"
+  end
 
   create_table "urls", force: :cascade do |t|
     t.integer "user_id"

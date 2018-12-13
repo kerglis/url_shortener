@@ -2,7 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Url, type: :model do
   describe 'associations' do
-    it { is_expected.to belong_to :user }
+    it do
+      aggregate_failures do
+        is_expected.to belong_to :user
+        is_expected.to have_many :url_clicks
+      end
+    end
   end
 
   describe 'validations' do

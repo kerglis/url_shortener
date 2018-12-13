@@ -23,9 +23,7 @@ class UrlsController < ApplicationController
     params.permit(url: %i[url_long manual_url_short])
   end
 
-  protected
-
-  def begin_of_association_chain
-    current_user
+  def collection
+    @urls ||= current_user.urls.with_click_summary
   end
 end

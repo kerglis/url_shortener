@@ -1,24 +1,37 @@
 class Url < ApplicationRecord
-  belongs_to :user
-  has_many :url_clicks
+  attr_writer :manual_url_short
 
-  validates :user, :url_long, :url_short, presence: true
+  # constants
+  CHARS = (('a'..'z').to_a + ('A'..'Z').to_a + (0..9).to_a).freeze
+  URL_SHORT_LENGTH = 8
+
+  # associations
+  belongs_to :user
+  has_many :url_clicks, dependent: :destroy
+
+  # validations
+  validates :user, :url_long, :url_short,
+            presence: true
   validates :url_long, url: true
-  validates_uniqueness_of :url_short, case_sensitive: false
   validates :url_short,
             format: {
               with: /\A[a-zA-Z0-9_]+\z/,
               message: 'only allows alpha-numeric and _'
+            },
+            uniqueness: {
+              case_sensitive: false
             }
 
+  # scopes
+  scope :with_click_summary, -> {
+    joins('LEFT JOIN url_clicks ON url_clicks.url_id = urls.id')
+      .select('urls.*, sum(url_clicks.clicks) AS click_summary')
+      .group('urls.id, url_clicks.url_id')
+  }
+
+  # callbacks
   strip_attributes only: %i[url_long url_short manual_url_short]
-
-  attr_writer :manual_url_short
-
   before_validation :generate_url_short
-
-  CHARS = (('a'..'z').to_a + ('A'..'Z').to_a + (0..9).to_a).freeze
-  URL_SHORT_LENGTH = 8
 
   def self.url_short_candidate
     # generate string of random chars - URL_SHORT_LENGTH long
@@ -31,11 +44,6 @@ class Url < ApplicationRecord
 
   def register_click!(user = nil)
     Urls::RegisterClick.new(self, user).call
-  end
-
-  def click_summary
-    summary = UrlClick.summary(self)[0]
-    summary[:summary] if summary
   end
 
   private

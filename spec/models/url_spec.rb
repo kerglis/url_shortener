@@ -101,24 +101,48 @@ RSpec.describe Url, type: :model do
     end
   end
 
-  describe '#click_summary' do
-    let!(:url) { create :url }
-    let!(:user) { create :user }
+  describe 'scopes' do
+    describe '.with_click_summary' do
+      let!(:url1) { create :url }
+      let!(:url2) { create :url }
+      let!(:url3) { create :url }
+      let!(:user1) { create :user }
+      let!(:user2) { create :user }
 
-    subject { url.click_summary }
-
-    context 'when no clicks' do
-      it { is_expected.to be_nil }
-    end
-
-    context 'when some clicks' do
-      before do
-        Urls::RegisterClick.new(url).call
-        Urls::RegisterClick.new(url).call
-        Urls::RegisterClick.new(url, user).call
+      subject do
+        described_class
+          .with_click_summary
+          .order(:id)
+          .map { |u| [u.id, u.click_summary] }
       end
 
-      it { is_expected.to eq 3 }
+      context 'when no clicks' do
+        it do
+          is_expected.to eq [
+            [url1.id, nil],
+            [url2.id, nil],
+            [url3.id, nil]
+          ]
+        end
+      end
+
+      context 'when some clicks' do
+        before do
+          Urls::RegisterClick.new(url1).call
+          Urls::RegisterClick.new(url1, user1).call
+          Urls::RegisterClick.new(url1, user2).call
+          Urls::RegisterClick.new(url2).call
+          Urls::RegisterClick.new(url2).call
+        end
+
+        it do
+          is_expected.to eq [
+            [url1.id, 3],
+            [url2.id, 2],
+            [url3.id, nil]
+          ]
+        end
+      end
     end
   end
 end

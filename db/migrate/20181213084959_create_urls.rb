@@ -1,7 +1,7 @@
 class CreateUrls < ActiveRecord::Migration[5.2]
   def change
     create_table :urls do |t|
-      t.integer :user_id
+      t.integer :user_id, null: false
       t.string :url_long, null: false
       t.string :url_short, null: false
 

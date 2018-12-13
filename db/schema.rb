@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2018_12_13_152715) do
   enable_extension "plpgsql"
 
   create_table "url_clicks", force: :cascade do |t|
-    t.integer "url_id"
+    t.integer "url_id", null: false
     t.integer "user_id"
     t.integer "clicks"
     t.datetime "created_at", null: false
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2018_12_13_152715) do
   end
 
   create_table "urls", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.string "url_long", null: false
     t.string "url_short", null: false
     t.datetime "created_at", null: false

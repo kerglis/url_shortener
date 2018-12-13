@@ -100,4 +100,25 @@ RSpec.describe Url, type: :model do
       end
     end
   end
+
+  describe '#click_summary' do
+    let!(:url) { create :url }
+    let!(:user) { create :user }
+
+    subject { url.click_summary }
+
+    context 'when no clicks' do
+      it { is_expected.to be_nil }
+    end
+
+    context 'when some clicks' do
+      before do
+        Urls::RegisterClick.new(url).call
+        Urls::RegisterClick.new(url).call
+        Urls::RegisterClick.new(url, user).call
+      end
+
+      it { is_expected.to eq 3 }
+    end
+  end
 end

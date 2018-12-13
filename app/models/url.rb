@@ -34,7 +34,8 @@ class Url < ApplicationRecord
   end
 
   def click_summary
-    UrlClick.summary(self).first[:summary]
+    summary = UrlClick.summary(self)[0]
+    summary[:summary] if summary
   end
 
   private

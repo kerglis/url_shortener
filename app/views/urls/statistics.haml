@@ -1,0 +1,17 @@
+%h2 Statistics
+
+- if @urls.present?
+  %table.table.table-striped.table-sm
+    %thead
+      %tr
+        %th Position
+        %th URL
+        %th URL shortcut
+        %th Clicks
+    %tbody
+      - @urls.each_with_index do |url, idx|
+        = render 'url_for_statistics', url: url, idx: idx + 1
+
+- else
+  .alert.alert-info
+    No URLs with statistics available

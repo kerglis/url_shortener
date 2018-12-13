@@ -1,0 +1,9 @@
+%tr[url]
+  %td
+    = "#{idx}."
+  %td
+    = url.url_long
+  %td
+    = "#{server_host}#{url.url_short}"
+  %td
+    = url&.click_summary || '---'

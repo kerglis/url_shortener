@@ -11,6 +11,9 @@
           %a.dropdown-item{ href: urls_url }
             = icon('fas', 'pencil-alt')
             Edit URLs
+          %a.dropdown-item{ href: statistics_urls_url }
+            = icon('fas', 'list')
+            Statistics
           %a.dropdown-item{ href: destroy_user_session_url, "data-method": :delete }
             = raw "#{icon('fas', "sign-out-alt")} Logout"
         - else

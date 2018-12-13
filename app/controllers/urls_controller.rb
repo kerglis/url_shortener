@@ -13,8 +13,8 @@ class UrlsController < ApplicationController
     update! { collection_url }
   end
 
-  def show
-    redirect_to collection_url
+  def statistics
+    @urls = Url.with_click_summary.ordered_by_clicks
   end
 
   private

@@ -3,5 +3,5 @@ Rails.application.routes.draw do
 
   resources :urls
 
-  get '/*all', to: 'redirect#show', constraints: { all: /.*/ }
+  get '/*all', to: 'redirect#index', constraints: { all: /.*/ }
 end

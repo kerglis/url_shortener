@@ -28,6 +28,7 @@ group :development, :test do
   gem 'faker'
   gem 'listen'
   gem 'pry'
+  gem 'rails-controller-testing'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails'
   gem 'rubocop', require: false

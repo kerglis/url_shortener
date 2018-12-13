@@ -1,12 +1,17 @@
 class RedirectController < ApplicationController
   before_action :resolve_url
 
-  def show
-    redirect_to @url.url_long and return if @url
+  def index
+    if @url
+      @url.register_click!(current_user)
+      redirect_to @url.url_long and return
+    end
 
     @random_url =
-      Url.order('RANDOM()').first&.url_short ||
+      Url.order(Arel.sql('RANDOM()')).first&.url_short ||
       'we_dont_have_any_urls_yet'
+
+    render :index, status: url_string.present? ? 404 : 200
   end
 
   private

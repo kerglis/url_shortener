@@ -1,0 +1,13 @@
+%tr[url]
+  %td.w-0
+    %a.btn.btn-outline-danger.btn-sm{ href: resource_url(url), title: 'Destroy', data: { method: :delete, confirm: 'Really?'} }
+      = icon('fas', 'trash')
+  %td.w-0
+    %a.btn.btn-outline-primary.btn-sm{ href: edit_resource_url(url), title: 'Edit url' }
+      = icon('fas', 'pencil-alt')
+  %td
+    = url.url_long
+  %td
+    = "#{server_host}#{url.url_short}"
+  %td
+    TODO

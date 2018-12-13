@@ -1,0 +1,20 @@
+%nav.navbar.navbar-expand-lg.navbar-light.bg-light.mb-3
+  %ul.navbar-nav
+    %li.nav-item.dropdown
+      %a.nav-link.dropdown-toggle{ href: "#", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false" }
+        = icon('fas', 'user')
+        - if current_user
+          = current_user.email
+
+      .dropdown-menu
+        - if current_user
+          %a.dropdown-item{ href: urls_url }
+            = icon('fas', 'pencil-alt')
+            Edit URLs
+          %a.dropdown-item{ href: destroy_user_session_url, "data-method": :delete }
+            = raw "#{icon('fas', "sign-out-alt")} Logout"
+        - else
+          %a.dropdown-item{ href: new_user_session_url }
+            Sign-in
+          %a.dropdown-item{ href: new_user_registration_url }
+            Register

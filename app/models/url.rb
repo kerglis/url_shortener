@@ -10,7 +10,9 @@ class Url < ApplicationRecord
               message: 'only allows alpha-numeric and _'
             }
 
-  strip_attributes only: %i[url_long url_short]
+  strip_attributes only: %i[url_long url_short manual_url_short]
+
+  attr_writer :manual_url_short
 
   before_validation :generate_url_short
 
@@ -18,16 +20,27 @@ class Url < ApplicationRecord
   URL_SHORT_LENGTH = 8
 
   def self.url_short_candidate
+    # generate string of random chars - URL_SHORT_LENGTH long
     (0...URL_SHORT_LENGTH).map { CHARS[rand(CHARS.size)] }.join
+  end
+
+  def manual_url_short
+    @manual_url_short ||= url_short
   end
 
   private
 
   def generate_url_short
+    if manual_url_short.present?
+      self.url_short = manual_url_short.strip
+      return
+    end
+
     return if url_short.present?
 
-    # generate `url_short` in loop until it is unique
     loop do
+      # generate `url_short` in loop until it is unique
+
       self.url_short = self.class.url_short_candidate
       break if self.class.where('url_short ilike ?', url_short).empty?
     end

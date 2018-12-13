@@ -1,0 +1,17 @@
+%a.btn.btn-primary.float-right{ href: new_resource_url }
+  = icon('fas', 'plus-square')
+  Create new URL
+
+%h2 URL list
+
+- if @urls.present?
+  %table.table.table-striped.table-sm
+    %thead
+      %tr
+        %th
+        %th
+        %th URL
+        %th URL shortcut
+        %th Stats
+    %tbody
+      = render @urls

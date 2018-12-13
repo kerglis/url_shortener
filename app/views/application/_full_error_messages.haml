@@ -1,0 +1,3 @@
+- if f.object.errors.present?
+  .alert.alert-danger
+    = raw f.object.errors.full_messages.join('<br/>')

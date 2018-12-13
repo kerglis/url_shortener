@@ -1,0 +1,11 @@
+= render "full_error_messages", f: f
+
+= f.input :url_long, label: 'URL'
+= f.input :manual_url_short, as: :string, label: 'URL shortcut', prepend: server_host, placeholder: "Will be generated automatically on empty", required: false, wrapper: :input_group
+
+%button.btn.btn-primary
+  = @url.new_record? ? "Create" : "Update"
+
+%a.btn.btn-outline-secondary{ href: collection_url }
+  = icon('fas', 'arrow-left')
+  Back

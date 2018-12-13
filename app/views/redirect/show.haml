@@ -1,0 +1,13 @@
+- if @url_string.present?
+  .alert.alert-danger
+    %p
+      %b= "/#{@url_string}"
+      is not a valid url-shortcut! Please use correct one!
+
+.alert.alert-info
+  %p
+    Please enter url-shortcut into your addressbar!
+    %br
+    Like:
+    - url = "#{server_host}#{@random_url}"
+    = link_to url, url

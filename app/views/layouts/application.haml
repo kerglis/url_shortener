@@ -1,0 +1,19 @@
+!!!
+%html{xmlns: "http://www.w3.org/1999/xhtml", "xml:lang" => "en", lang: "en"}
+  %head
+    %title URL Shortener
+    %meta{"http-equiv" => "Content-Type", content: "text/html;charset=UTF-8"}/
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0" }
+
+    = stylesheet_link_tag "application"
+    = csrf_meta_tag
+
+  %body
+    .container.mt-5
+      = render "user_toolbar"
+
+      #flash_messages
+        = render "flash_messages"
+      = yield
+
+    = javascript_include_tag "application"

@@ -21,8 +21,7 @@ ActiveRecord::Schema.define(version: 2018_12_13_152715) do
     t.integer "clicks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["url_id"], name: "index_url_clicks_on_url_id"
-    t.index ["user_id"], name: "index_url_clicks_on_user_id"
+    t.index ["url_id", "user_id"], name: "index_url_clicks_on_url_id_and_user_id", unique: true
   end
 
   create_table "urls", force: :cascade do |t|

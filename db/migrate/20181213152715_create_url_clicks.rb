@@ -8,7 +8,6 @@ class CreateUrlClicks < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    add_index :url_clicks, :url_id
-    add_index :url_clicks, :user_id
+    add_index :url_clicks, [:url_id, :user_id], unique: true
   end
 end

@@ -112,16 +112,16 @@ RSpec.describe Url, type: :model do
       subject do
         described_class
           .with_click_summary
-          .order(:id)
+          .ordered_by_clicks
           .map { |u| [u.id, u.click_summary] }
       end
 
       context 'when no clicks' do
         it do
           is_expected.to eq [
-            [url1.id, nil],
-            [url2.id, nil],
-            [url3.id, nil]
+            [url1.id, 0],
+            [url2.id, 0],
+            [url3.id, 0]
           ]
         end
       end
@@ -130,16 +130,16 @@ RSpec.describe Url, type: :model do
         before do
           Urls::RegisterClick.new(url1).call
           Urls::RegisterClick.new(url1, user1).call
-          Urls::RegisterClick.new(url1, user2).call
-          Urls::RegisterClick.new(url2).call
+          Urls::RegisterClick.new(url2, user1).call
+          Urls::RegisterClick.new(url2, user2).call
           Urls::RegisterClick.new(url2).call
         end
 
         it do
           is_expected.to eq [
-            [url1.id, 3],
-            [url2.id, 2],
-            [url3.id, nil]
+            [url2.id, 3],
+            [url1.id, 2],
+            [url3.id, 0]
           ]
         end
       end

@@ -10,4 +10,4 @@
   %td
     = "#{server_host}#{url.url_short}"
   %td
-    = url.click_summary || '---'
+    = url&.click_summary || '---'

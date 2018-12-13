@@ -25,8 +25,13 @@ class Url < ApplicationRecord
   # scopes
   scope :with_click_summary, -> {
     joins('LEFT JOIN url_clicks ON url_clicks.url_id = urls.id')
-      .select('urls.*, sum(url_clicks.clicks) AS click_summary')
+      .select('urls.*, COALESCE(SUM(url_clicks.clicks),0) AS click_summary')
       .group('urls.id, url_clicks.url_id')
+  }
+
+  scope :ordered_by_clicks, -> {
+    # NOTE: should be used together with :with_click_summary
+    order('click_summary DESC, urls.id ASC')
   }
 
   # callbacks

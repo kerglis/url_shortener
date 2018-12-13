@@ -1,0 +1,16 @@
+development: &common
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+  database: url_shortener
+  username: url_shortener
+  password: <%= ENV['URL_DB_PASSWORD'] %>
+  host: localhost
+
+test: &test
+  <<: *common
+  database: url_shortener_test
+
+production:
+  <<: *common

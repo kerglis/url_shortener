@@ -33,6 +33,10 @@ class Url < ApplicationRecord
     Urls::RegisterClick.new(self, user).call
   end
 
+  def click_summary
+    UrlClick.summary(self).first[:summary]
+  end
+
   private
 
   def generate_url_short
